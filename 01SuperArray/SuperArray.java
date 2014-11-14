@@ -16,6 +16,9 @@ public class SuperArray{
 	}
 	return stuff + "]";
     }
+    public void add(){
+	this.resize(this.size() + 1);
+    }
     public void add(Object e){
 	for (int i = 0; i < dataset.length ; i++){
 	    if (dataset[i]==null){
@@ -56,17 +59,26 @@ public class SuperArray{
     }
     public Object get(int index){
 	if ( index < 0  || index >= size() ){
-	    throw new IndexOutOfBoundsException();
+	    throw new IndexOutOfBoundsException("Index is out of range.");
 	}else{
 	    return dataset[index];
 	}
     }
-    public void set(int index, Object e){
+    /*   public void set(int index, Object e){
 	if ( index < 0  || index >= size() ){
 	    throw new IndexOutOfBoundsException();
 	}else{
 	    dataset[index] = e;
 	}
+    }*/
+    public Object set(int index, Object o){
+	Object replaced = dataset[index];
+	if ( index < 0  || index >= size() ){
+	    throw new IndexOutOfBoundsException();
+	}else{
+	    dataset[index] = o;
+	}
+	return replaced;
     }
     public static void main(String[]args){
 	/*	SuperArray a = new SuperArray();
@@ -99,5 +111,15 @@ public class SuperArray{
 	L.add("seven");
 	L.add(7, "eight");
 	System.out.println(L.toString());
+	L.add();
+	L.set(3, "MOOP");
+
+       	System.out.println(L.toString());
+	System.out.println(L.get(5));
+	System.out.println(L.get(3));
+	SuperArray M = new SuperArray();
+	L.set(5, M);
+	System.out.println(L.toString());
+
     }
 }
