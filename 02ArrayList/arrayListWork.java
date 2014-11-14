@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class ArrayListMethods{
+public class arrayListMethods{
     
     public static void collapseDuplicates(ArrayList<Integer> L){
 	int i = 0;
