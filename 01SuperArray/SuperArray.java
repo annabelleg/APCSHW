@@ -17,9 +17,6 @@ public class SuperArray{
 	return stuff + "]";
     }
     public void add(Object e){
-	if (dataset[size()]!=null){
-	    dataset = dataset.resize(size() + 1);
-	}
 	for (int i = 0; i < dataset.length ; i++){
 	    if (dataset[i]==null){
 	        dataset[i] = e;
@@ -28,7 +25,11 @@ public class SuperArray{
 	}
     }
     public void add(int index, Object e){
-
+	if (index < 0 || index > this.size()){
+	    throw new IndexOutOfBoundsException("Index out of bounds.");
+	}
+	this.resize(this.size() + 1);
+	this.set(index, e);
     }
     public int size(){
 	return numEls;
@@ -68,7 +69,7 @@ public class SuperArray{
 	}
     }
     public static void main(String[]args){
-	SuperArray a = new SuperArray();
+	/*	SuperArray a = new SuperArray();
 	SuperArray b = new SuperArray(5);
 	//	System.out.println(a.toString());
 	//	System.out.println(b.toString());
@@ -88,12 +89,15 @@ public class SuperArray{
 	//	System.out.println(a.get(3));
 	System.out.println(b.get(0));
 	b.set(6,"buggabo");
-	System.out.println(b.toString());
+	System.out.println(b.toString());*/
 	//Example of ways to add Integer objects:
 	Integer x = new Integer(5);
 	SuperArray L = new SuperArray();
 	L.add(x);
 	L.add(new Integer(99));
+	System.out.println(L.toString());
+	L.add("seven");
+	L.add(7, "eight");
 	System.out.println(L.toString());
     }
 }
