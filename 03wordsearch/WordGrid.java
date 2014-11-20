@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class WordGrid{
     private char[][]data;
 
@@ -8,11 +10,21 @@ public class WordGrid{
      */
     public WordGrid(int rows,int cols){
 	data = new char[rows][cols];
-	for (int i = 0; i < rows; i ++){
-	    for (int x = 0; x < cols; x ++){
-		data[i][x] = ' ';
+	for (int r = 0; r < rows; r ++){
+	    for (int c = 0; c < cols; c ++){
+		data[r][c] = '.';
 	    }
 	}
+    }
+    public int getRows(){
+	return data.length;
+    }
+    public int getCols(){
+	int cols = 0;
+	for (int i = 0; i < data.length; i++){
+	    cols = data[i].length;
+	}
+	return cols;
     }
     
     /**Set all values in the WordGrid to spaces ' '*/
@@ -29,19 +41,16 @@ public class WordGrid{
      *separated by newlines.
      */
     public String toString(){
-	String result = "[[";
+	String result = "";
 	for (int r = 0; r < data.length; r++){
 	    for (int c = 0; c < data[r].length; c++){
 		result+= data[r][c] + " ";
 	    }
 	    if (r != data.length-1){
-		result += "]\n [";
-	    }else{
-		result += "]";
+		result += "\n";
 	    }
 	}
-	result += "]";
-        return result;
+        return result + "\n";
     }
 
     /**Attempts to add a given word to the specified position of the WordGrid.
@@ -49,16 +58,46 @@ public class WordGrid{
      *have a corresponding letter to match any letters that it overlaps.
      *
      *@param word is any text to be added to the word grid.
-     *@param row is the vertical locaiton of where you want the word to start.
+     *@param row is the vertical location of where you want the word to start.
      *@param col is the horizontal location of where you want the word to start.
      *@return true when the word is added successfully. When the word doesn't fit,
      *or there are overlapping letters that do not match, then false is returned.
      */
     public boolean addWordHorizontal(String word,int row, int col){
+	if (row >= this.getRows() || col >= this.getCols()) return false;
+	char[] chars = word.toCharArray();
+	if (this.getCols() - col < chars.length) return false;
+	for (int w = 0; w < chars.length; w++){
+	    if (data[row][col + w] != '.' && data[row][col + w] != chars[w]){
+		return false;
+	    }else{
+		data[row][col+w] = chars[w];
+	    }
+	}
 	return true;
-
     }
-
     //vertical + diagonal should be implemented as well.
+    public boolean addWordVertical(String word,int row, int col){
+	char[] chars = word.toCharArray();
+	if (this.getRows() - row < chars.length) return false;
+	for (int w = 0; w < chars.length; w++){
+	    if (data[row + w][col] == '.' || data[row + w][col] == chars[w]){
+		data[row+w][col] = chars[w];
+	    }else{
 
+		return false;
+	    }
+	}
+	return true;
+    }
+    /*NOTE: These don't yet work so that if it overlaps with the wrong letter, it doesn't change anything. EX: It will do this:
+. . . . . . . . 
+. . . . . . . . 
+. . . . . . . . 
+. . . . . . j . 
+. . . . . . e . 
+. . m e l l o . 
+. . . . . . . . 
+. . . . . . . . 
+    */
 }
