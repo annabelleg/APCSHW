@@ -82,48 +82,39 @@ public class WordGrid{
 	char[] chars = word.toCharArray();
 	if (this.getRows() - row < chars.length) return false;
 	for (int i = 0; i < chars.length; i++){
-	    if (data[row + i][col] != '.'){
-		if (data[row + i][col] != chars[i]) return false;
-	    }
+	    if (data[row + i][col] != '.' && data[row + i][col] != chars[i]) return false;  
 	}
 	for (int w = 0; w < chars.length; w++){
-	    if (data[row + w][col] == '.' || data[row + w][col] == chars[w]){
-		data[row + w][col] = chars[w];
-	    }else{
-
-		return false;
-	    }
+	    data[row + w][col] = chars[w];
 	}
+   
 	return true;
     }
 
     public boolean addWordDiagonalDown(String word, int row, int col){
 	if (row >= this.getRows() || col >= this.getCols()) return false;
 	char[] chars = word.toCharArray();
-	if (this.getRows() - row < chars.length) return false;
+	if (this.getRows() - row < chars.length || this.getCols() - col < chars.length) return false;
 	for (int i = 0; i < chars.length; i++){
-	    if (data[row + i][col] != '.'){
-		if (data[row + i][col + i] != chars[i]) return false;
-	    }
+	    if (data[row + i][col + i] != '.' && data[row + i][col + i] != chars[i]) return false;  
 	}
 	for (int w = 0; w < chars.length; w++){
-	    if (data[row + w][col + w] == '.' || data[row + w][col] == chars[w]){
-		data[row + w][col + w] = chars[w];
-	    }else{
-
-		return false;
-	    }
+	    data[row + w][col + w] = chars[w];
 	}
 	return true;
     }
-    /*NOTE: These don't yet work so that if it overlaps with the wrong letter, it doesn't change anything. EX: It will do this:
-. . . . . . . . 
-. . . . . . . . 
-. . . . . . . . 
-. . . . . . j . 
-. . . . . . e . 
-. . m e l l o . 
-. . . . . . . . 
-. . . . . . . . 
-    */
+
+    public boolean addWordDiagonalUp(String word, int row, int col){
+	if (row >= this.getRows()|| row < 0 || col >= this.getCols() || col < 0) return false;
+	char[] chars = word.toCharArray();
+	if (this.getRows() - row > chars.length || this.getCols() - col < chars.length) return false;
+	for (int i = 0; i < chars.length; i++){
+	    if ( row - i < 0 || data[row - i][col + i] != '.' && data[row - i][col + i] != chars[i]) return false;  
+	}
+	for (int w = 0; w < chars.length; w++){
+	    data[row - w][col + w] = chars[w];
+	}
+	
+	return true;
+    }
 }
