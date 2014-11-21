@@ -67,22 +67,48 @@ public class WordGrid{
 	if (row >= this.getRows() || col >= this.getCols()) return false;
 	char[] chars = word.toCharArray();
 	if (this.getCols() - col < chars.length) return false;
+	for (int i = 0; i < chars.length; i++){
+	    if (data[row][col + i] != '.' && data[row][col + i] != chars[i]) return false;  
+	}
 	for (int w = 0; w < chars.length; w++){
-	    if (data[row][col + w] != '.' && data[row][col + w] != chars[w]){
-		return false;
-	    }else{
-		data[row][col+w] = chars[w];
-	    }
+	    data[row][col + w] = chars[w];
+	
 	}
 	return true;
     }
     //vertical + diagonal should be implemented as well.
     public boolean addWordVertical(String word,int row, int col){
+	if (row >= this.getRows() || col >= this.getCols()) return false;
 	char[] chars = word.toCharArray();
 	if (this.getRows() - row < chars.length) return false;
+	for (int i = 0; i < chars.length; i++){
+	    if (data[row + i][col] != '.'){
+		if (data[row + i][col] != chars[i]) return false;
+	    }
+	}
 	for (int w = 0; w < chars.length; w++){
 	    if (data[row + w][col] == '.' || data[row + w][col] == chars[w]){
-		data[row+w][col] = chars[w];
+		data[row + w][col] = chars[w];
+	    }else{
+
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    public boolean addWordDiagonalDown(String word, int row, int col){
+	if (row >= this.getRows() || col >= this.getCols()) return false;
+	char[] chars = word.toCharArray();
+	if (this.getRows() - row < chars.length) return false;
+	for (int i = 0; i < chars.length; i++){
+	    if (data[row + i][col] != '.'){
+		if (data[row + i][col + i] != chars[i]) return false;
+	    }
+	}
+	for (int w = 0; w < chars.length; w++){
+	    if (data[row + w][col + w] == '.' || data[row + w][col] == chars[w]){
+		data[row + w][col + w] = chars[w];
 	    }else{
 
 		return false;
