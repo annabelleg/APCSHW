@@ -14,7 +14,7 @@ public class WordSearch{
 	System.out.println(a.addWordDiagonalUp("yellow", 6,0));
 	System.out.println(a);
 		a.clear();
-		System.out.println(a);*/
+		System.out.println(a);
 
 	//	System.out.println(a.getCols());
 	//	System.out.println(a.getRows());
@@ -36,8 +36,20 @@ public class WordSearch{
 	System.out.println(a);
 	WordGrid.fit("birthday",a);
 	WordGrid.fit("cow",a);
-	WordGrid.fit("hi",a);
-
-	System.out.println(a);
+	WordGrid.fit("hi",a);*/
+	
+	//	System.out.println(a);
+	System.out.println(scan());
+    }
+    public static ArrayList scan() throws FileNotFoundException {
+	File f = new File("wordbank.txt");
+	System.out.println(f.exists());
+	System.out.println(f.canRead());
+	Scanner scnr = new Scanner(f);
+	ArrayList words = new ArrayList();
+	while (scnr.hasNext()){
+	    words.add(scnr.next());
+	}
+	return words;
     }
 }
