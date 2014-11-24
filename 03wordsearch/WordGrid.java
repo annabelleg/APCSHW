@@ -31,7 +31,7 @@ public class WordGrid{
     private void clear(){
 	for (int r = 0; r < data.length; r++){
 	    for (int c = 0; c < data[r].length; c++){
-		data[r][c] = ' ';
+		data[r][c] = '.';
 	    }
 	}
     }
@@ -117,4 +117,42 @@ public class WordGrid{
 	
 	return true;
     }
+    public static String reverse(String a){
+	String result = new StringBuilder(a).reverse().toString();
+	return result;
+    }
+ public static void fit(String word, WordGrid w){
+	Random rand = new Random();
+	 int direction = rand.nextInt(8);
+	for (int tries = 100; tries > 0; tries--){
+	    int x = rand.nextInt(w.getCols());
+	    int y = rand.nextInt(w.getRows());
+	    if (direction == 0){
+		if (w.addWordHorizontal(word,x,y)) break;
+		direction = rand.nextInt(8);
+	    }else if (direction == 1){
+		if (w.addWordHorizontal(WordGrid.reverse(word),x,y)) break;
+	        direction = rand.nextInt(8);
+	    }else if (direction == 2){
+		if (w.addWordVertical(word,x,y)) break;
+		direction = rand.nextInt(8);
+	    }else if (direction == 3){
+		if (w.addWordVertical(WordGrid.reverse(word),x,y)) break;
+	        direction = rand.nextInt(8);
+	    }else if (direction == 4){
+	        if (w.addWordDiagonalDown(word,x,y)) break;
+	        direction = rand.nextInt(8);
+	    }else if (direction == 5){
+		if (w.addWordDiagonalDown(WordGrid.reverse(word),x,y)) break;
+		direction = rand.nextInt(8);
+	    }else if (direction == 6){
+	        if (w.addWordDiagonalUp(word,x,y)) break;
+	        direction = rand.nextInt(8);
+	    }else{
+	        if (w.addWordDiagonalUp(WordGrid.reverse(word),x,y)) break;
+		direction = rand.nextInt(8);
+	    }	
+	}
+    }
 }
+
