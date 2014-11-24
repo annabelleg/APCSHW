@@ -46,7 +46,7 @@ public class WordSearch{
 	System.out.println(f.exists());
 	System.out.println(f.canRead());
 	Scanner scnr = new Scanner(f);
-	ArrayList words = new ArrayList();
+	ArrayList<String> words = new ArrayList<String>();
 	while (scnr.hasNext()){
 	    words.add(scnr.next());
 	}
