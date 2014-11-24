@@ -2,54 +2,25 @@ import java.util.*;
 import java.io.*;
 
 public class WordSearch{
-    public static void main(String[]args){
+    public static void main(String[]args) throws FileNotFoundException{
 	WordGrid a = new WordGrid(15,15);
-	/*System.out.println(a);
-	System.out.println(a.addWordHorizontal("mello", 5,2));
-	System.out.println(a);
-	System.out.println(a.addWordVertical("jello", 1,6));
-	System.out.println(a);
-	System.out.println(a.addWordDiagonalDown("hello", 0,0));
-	System.out.println(a);
-	System.out.println(a.addWordDiagonalUp("yellow", 6,0));
-	System.out.println(a);
-		a.clear();
-		System.out.println(a);
-
-	//	System.out.println(a.getCols());
-	//	System.out.println(a.getRows());
-	//	String a = "hello world";
-	WordGrid.fit("rubberduck",a);
-	WordGrid.fit("hello",a);
-	System.out.println(a);
-	WordGrid.fit("world",a);
-	System.out.println(a);
-	WordGrid.fit("peanut",a);
-	WordGrid.fit("love",a);
-	WordGrid.fit("annabelle",a);
-	WordGrid.fit("ruby",a);
-	System.out.println(a);
-	WordGrid.fit("queen",a);
-	WordGrid.fit("candle",a);
-	WordGrid.fit("candelabra",a);
-	WordGrid.fit("tenletters",a);
-	System.out.println(a);
-	WordGrid.fit("birthday",a);
-	WordGrid.fit("cow",a);
-	WordGrid.fit("hi",a);*/
-	
-	//	System.out.println(a);
-	System.out.println(scan());
+	System.out.println(chooseWords(a));
     }
-    public static ArrayList scan() throws FileNotFoundException {
+    public static ArrayList<String> scan() throws FileNotFoundException {
 	File f = new File("wordbank.txt");
-	System.out.println(f.exists());
-	System.out.println(f.canRead());
 	Scanner scnr = new Scanner(f);
 	ArrayList<String> words = new ArrayList<String>();
 	while (scnr.hasNext()){
 	    words.add(scnr.next());
 	}
 	return words;
+    }
+    public static WordGrid chooseWords(WordGrid w) throws FileNotFoundException{
+        WordSearch.scan();
+	Random rand = new Random();
+        for (int i = 20; i > 0; i--){
+	    WordGrid.fit(scan().get(rand.nextInt(scan().size())), w);
+	}
+	return w;
     }
 }
