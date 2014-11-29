@@ -3,8 +3,11 @@ import java.io.*;
 
 public class WordSearch{
     public static void main(String[]args) throws FileNotFoundException{
-	WordGrid a = new WordGrid(15,15);
-	System.out.println(chooseWords(a));
+	if (args[0]!=null && args[1]!= null){
+	    WordGrid a = new WordGrid(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
+	    System.out.println(chooseWords(a));
+	}else{ System.out.println("Please enter your data like this:\n     java Driver rows cols [ randomSeed [ answers] ]\n where rows and cols are integers from 0-30. randomSeed and answers are optional.");
+	}
     }
     public static ArrayList<String> scan() throws FileNotFoundException {
 	File f = new File("wordbank.txt");
@@ -16,9 +19,9 @@ public class WordSearch{
 	return words;
     }
     public static WordGrid chooseWords(WordGrid w) throws FileNotFoundException{
-        WordSearch.scan();
+        ArrayList<String> words = WordSearch.scan();
 	Random rand = new Random();
-        for (int i = 20; i > 0; i--){
+        for (int i = words.size(); i > 0; i--){
 	    WordGrid.fit(scan().get(rand.nextInt(scan().size())), w);
 	}
 	return w;
