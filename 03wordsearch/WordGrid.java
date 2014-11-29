@@ -2,6 +2,8 @@ import java.util.*;
 
 public class WordGrid{
     private char[][]data;
+    private Random rand;
+    private ArrayList<String> words;
 
     /**Initialize the grid to the size specified and fill all of the positions
      *with spaces.
@@ -121,9 +123,12 @@ public class WordGrid{
 	String result = new StringBuilder(a).reverse().toString();
 	return result;
     }
- public static void fit(String word, WordGrid w){
-	Random rand = new Random();
-	 int direction = rand.nextInt(8);
+
+    /*   public void setSeed(long seed){
+	rand = rand.nextInt(seed);
+	}*/
+    public static void fit(String word, WordGrid w){
+	int direction = rand.nextInt(8);
 	for (int tries = 100; tries > 0; tries--){
 	    int x = rand.nextInt(w.getCols());
 	    int y = rand.nextInt(w.getRows());
