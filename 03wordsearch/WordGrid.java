@@ -38,7 +38,7 @@ public class WordGrid{
 	rand = new Random(seed);
     }
     
-    /**Set all values in the WordGrid to spaces ' '*/
+    /**Set all values in the WordGrid to blanks '.'*/
     private void clear(){
 	for (int r = 0; r < data.length; r++){
 	    for (int c = 0; c < data[r].length; c++){
@@ -163,25 +163,27 @@ public class WordGrid{
 	    }	
 	}
     }
-    public void loadWordsFromFile(File filename, boolean fillRandomLetters) throws FileNotFoundException {
+    public void loadWordsFromFile(String filename, boolean fillRandomLetters) throws FileNotFoundException {
 	chooseWords(filename);
 	if (fillRandomLetters){
 	    fillIn();
 	}
     }
-    public static ArrayList<String> scan(File f) throws FileNotFoundException {
-	Scanner scnr = new Scanner(f);
+    public void chooseWords(String f) throws FileNotFoundException{
+        ArrayList<String> allWords = scan(f);
+        for (int i = allWords.size(); i > 0; i--){
+	    fit(scan(f).get(rand.nextInt(scan(f).size())));
+	    words.add(scan(f).get(rand.nextInt(scan(f).size())));
+	}
+    }
+    public static ArrayList<String> scan(String f) throws FileNotFoundException {
+	File fname = new File(f);
+	Scanner scnr = new Scanner(fname);
 	ArrayList<String> allWords = new ArrayList<String>();
 	while (scnr.hasNext()){
 	    allWords.add(scnr.next());
 	}
 	return allWords;
-    }
-    public void chooseWords(File f) throws FileNotFoundException{
-        ArrayList<String> allWords = scan(f);
-        for (int i = allWords.size(); i > 0; i--){
-	    fit(scan(f).get(rand.nextInt(scan(f).size())));
-	}
     }
     public void fillIn(){
 	for (int i = 0 ; i < data.length ; i++){
@@ -222,7 +224,9 @@ public class WordGrid{
 	if (num == 25) return 'z';
     }
     public String wordsInPuzzle(){
-
+	for (int i = 0; i < words.size() -2; i+=3){
+	    return "     " + words.get(i) + "     " + words.get(i+1) + "     " + words.get(i+2) + "\n";
+	}
     }
 }
 
