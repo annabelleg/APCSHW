@@ -11,13 +11,15 @@ public class WordGrid{
      *@param rows is the starting height of the WordGrid
      *@param cols is the starting width of the WordGrid
      */
-    public WordGrid(int rows,int cols, int randomSeed, int answers){
+    public WordGrid(int rows,int cols){
 	data = new char[rows][cols];
 	for (int r = 0; r < rows; r ++){
 	    for (int c = 0; c < cols; c ++){
 		data[r][c] = '.';
 	    }
 	}
+	rand = new Random();
+	//	words = [];
     }
     public int getRows(){
 	return data.length;
@@ -29,8 +31,11 @@ public class WordGrid{
 	}
 	return cols;
     }
-    public int getSeed(){
-	return this
+    public long getSeed(){
+	return rand(seed);
+    }
+    public void setSeed(long seed){
+	rand = new Random(seed);
     }
     
     /**Set all values in the WordGrid to spaces ' '*/
@@ -129,59 +134,60 @@ public class WordGrid{
     public  void fit(String word){
 	int direction = rand.nextInt(8);
 	for (int tries = 100; tries > 0; tries--){
-	    int x = rand.nextInt(w.getCols());
-	    int y = rand.nextInt(w.getRows());
+	    int x = rand.nextInt(getCols());
+	    int y = rand.nextInt(getRows());
 	    if (direction == 0){
-		if (w.addWordHorizontal(word,x,y)) break;
+		if (addWordHorizontal(word,x,y)) break;
 		direction = rand.nextInt(8);
 	    }else if (direction == 1){
-		if (w.addWordHorizontal(WordGrid.reverse(word),x,y)) break;
+		if (addWordHorizontal(WordGrid.reverse(word),x,y)) break;
 	        direction = rand.nextInt(8);
 	    }else if (direction == 2){
-		if (w.addWordVertical(word,x,y)) break;
+		if (addWordVertical(word,x,y)) break;
 		direction = rand.nextInt(8);
 	    }else if (direction == 3){
-		if (w.addWordVertical(WordGrid.reverse(word),x,y)) break;
+		if (addWordVertical(WordGrid.reverse(word),x,y)) break;
 	        direction = rand.nextInt(8);
 	    }else if (direction == 4){
-	        if (w.addWordDiagonalDown(word,x,y)) break;
+	        if (addWordDiagonalDown(word,x,y)) break;
 	        direction = rand.nextInt(8);
 	    }else if (direction == 5){
-		if (w.addWordDiagonalDown(WordGrid.reverse(word),x,y)) break;
+		if (addWordDiagonalDown(WordGrid.reverse(word),x,y)) break;
 		direction = rand.nextInt(8);
 	    }else if (direction == 6){
-	        if (w.addWordDiagonalUp(word,x,y)) break;
+	        if (addWordDiagonalUp(word,x,y)) break;
 	        direction = rand.nextInt(8);
 	    }else{
-	        if (w.addWordDiagonalUp(WordGrid.reverse(word),x,y)) break;
+	        if (addWordDiagonalUp(WordGrid.reverse(word),x,y)) break;
 		direction = rand.nextInt(8);
 	    }	
 	}
     }
-    public void loadWordsFromFile(String filename, boolean fillRandomLetters) throws FileNotFoundException {
-	File f = new File(filename);
-	Scanner scnr = new Scanner(f);
-	ArrayList<String> words = new ArrayList<String>();
-	while (scnr.hasNext()){
-	    words.add(scnr.next());
-	}
-	this.chooseWords();
+    public void loadWordsFromFile(File filename, boolean fillRandomLetters) throws FileNotFoundException {
+	chooseWords(filename);
 	if (fillRandomLetters){
-	    this.fillIn();
+	    fillIn();
 	}
     }
-    public void chooseWords() throws FileNotFoundException{
-        ArrayList<String> words = WordSearch.scan();
-        for (int i = words.size(); i > 0; i--){
-	    fit(scan().get(rand.nextInt(scan().size())));
+    public static ArrayList<String> scan(File f) throws FileNotFoundException {
+	Scanner scnr = new Scanner(f);
+	ArrayList<String> allWords = new ArrayList<String>();
+	while (scnr.hasNext()){
+	    allWords.add(scnr.next());
 	}
-	return w;
+	return allWords;
+    }
+    public void chooseWords(File f) throws FileNotFoundException{
+        ArrayList<String> allWords = scan(f);
+        for (int i = allWords.size(); i > 0; i--){
+	    fit(scan(f).get(rand.nextInt(scan(f).size())));
+	}
     }
     public void fillIn(){
 	for (int i = 0 ; i < data.length ; i++){
 	    for (int x = 0; x < data[i].length ; x++){
 		if (data[i][x]!='.'){
-		    data[i][x] = pickRandLetter;
+		    data[i][x] = pickRandLetter();
 		}
 	    }
 	}
@@ -214,6 +220,9 @@ public class WordGrid{
 	if (num == 23) return 'x';
 	if (num == 24) return 'y';
 	if (num == 25) return 'z';
+    }
+    public String wordsInPuzzle(){
+
     }
 }
 
