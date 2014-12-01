@@ -1,8 +1,9 @@
 import java.util.*;
+import java.io.*;
 
 public class WordGrid{
     private char[][]data;
-    private Random rand;
+    private static Random rand;
     private ArrayList<String> words;
 
     /**Initialize the grid to the size specified and fill all of the positions
@@ -10,7 +11,7 @@ public class WordGrid{
      *@param rows is the starting height of the WordGrid
      *@param cols is the starting width of the WordGrid
      */
-    public WordGrid(int rows,int cols){
+    public WordGrid(int rows,int cols, int randomSeed, int answers){
 	data = new char[rows][cols];
 	for (int r = 0; r < rows; r ++){
 	    for (int c = 0; c < cols; c ++){
@@ -27,6 +28,9 @@ public class WordGrid{
 	    cols = data[i].length;
 	}
 	return cols;
+    }
+    public int getSeed(){
+	return this
     }
     
     /**Set all values in the WordGrid to spaces ' '*/
@@ -78,7 +82,6 @@ public class WordGrid{
 	}
 	return true;
     }
-    //vertical + diagonal should be implemented as well.
     public boolean addWordVertical(String word,int row, int col){
 	if (row >= this.getRows() || col >= this.getCols()) return false;
 	char[] chars = word.toCharArray();
@@ -123,11 +126,7 @@ public class WordGrid{
 	String result = new StringBuilder(a).reverse().toString();
 	return result;
     }
-
-    /*   public void setSeed(long seed){
-	rand = rand.nextInt(seed);
-	}*/
-    public static void fit(String word, WordGrid w){
+    public  void fit(String word){
 	int direction = rand.nextInt(8);
 	for (int tries = 100; tries > 0; tries--){
 	    int x = rand.nextInt(w.getCols());
@@ -158,6 +157,63 @@ public class WordGrid{
 		direction = rand.nextInt(8);
 	    }	
 	}
+    }
+    public void loadWordsFromFile(String filename, boolean fillRandomLetters) throws FileNotFoundException {
+	File f = new File(filename);
+	Scanner scnr = new Scanner(f);
+	ArrayList<String> words = new ArrayList<String>();
+	while (scnr.hasNext()){
+	    words.add(scnr.next());
+	}
+	this.chooseWords();
+	if (fillRandomLetters){
+	    this.fillIn();
+	}
+    }
+    public void chooseWords() throws FileNotFoundException{
+        ArrayList<String> words = WordSearch.scan();
+        for (int i = words.size(); i > 0; i--){
+	    fit(scan().get(rand.nextInt(scan().size())));
+	}
+	return w;
+    }
+    public void fillIn(){
+	for (int i = 0 ; i < data.length ; i++){
+	    for (int x = 0; x < data[i].length ; x++){
+		if (data[i][x]!='.'){
+		    data[i][x] = pickRandLetter;
+		}
+	    }
+	}
+    }
+    public char pickRandLetter(){
+	int num = rand.nextInt(26);
+	if (num == 0) return 'a';
+	if (num == 1) return 'b';
+	if (num == 2) return 'c';
+	if (num == 3) return 'd';
+	if (num == 4) return 'e';
+	if (num == 5) return 'f';
+	if (num == 6) return 'g';
+	if (num == 7) return 'h';
+	if (num == 8) return 'i';
+	if (num == 9) return 'j';
+	if (num == 10) return 'k';
+	if (num == 11) return 'l';
+	if (num == 12) return 'm';
+	if (num == 13) return 'n';
+	if (num == 14) return 'o';
+	if (num == 15) return 'p';
+	if (num == 16) return 'q';
+	if (num == 17) return 'r';
+	if (num == 18) return 's';
+	if (num == 19) return 't';
+	if (num == 20) return 'u';
+	if (num == 21) return 'v';
+	if (num == 22) return 'w';
+	if (num == 23) return 'x';
+	if (num == 24) return 'y';
+	if (num == 25) return 'z';
     }
 }
 
