@@ -223,12 +223,15 @@ public class WordGrid{
 	if (num == 22) return 'w';
 	if (num == 23) return 'x';
 	if (num == 24) return 'y';
-	if (num == 25) return 'z';
+        return 'z';
+        
     }
     public String wordsInPuzzle(){
+	String out = "";
 	for (int i = 0; i < words.size() -2; i+=3){
-	    return "     " + words.get(i) + "     " + words.get(i+1) + "     " + words.get(i+2) + "\n";
+	    out+= "     " + words.get(i) + "     " + words.get(i+1) + "     " + words.get(i+2) + "\n";
 	}
+	return out;
     }
 }
 
