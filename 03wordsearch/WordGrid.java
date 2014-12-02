@@ -19,7 +19,9 @@ public class WordGrid{
 	    }
 	}
 	rand = new Random();
-	//	words = [];
+    }
+    public WordGrid(){
+	this(15,15);
     }
     public int getRows(){
 	return data.length;
@@ -31,8 +33,8 @@ public class WordGrid{
 	}
 	return cols;
     }
-    public long getSeed(){
-	return rand(seed);
+    public void setRowsAndCols(int r, int c){
+	data = new char[r][c];
     }
     public void setSeed(long seed){
 	rand = new Random(seed);
