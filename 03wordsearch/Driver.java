@@ -3,8 +3,9 @@ import java.io.*;
 
 public class Driver{
     public static void main(String[]args){
-	int rows;
-	int cols;
+	int rows = 0;
+	int cols = 0;
+	//	int getSeed;
 	boolean fillrandletters = true;
 	if (args[0]!=null && args[1]!=null){
 	    rows = Integer.parseInt(args[0]);
@@ -14,7 +15,8 @@ public class Driver{
 	}
 	if (args[3]=="1") fillrandletters = false;
 	WordGrid w = new WordGrid(rows, cols);
-	if (this.getSeed()!=null){ 
+	//	w.setRowsAndCols(rows,cols);
+	if (args[2]!=null){ 
 	    w.setSeed(Integer.parseInt(args[2]));  
 	}
 	w.loadWordsFromFile("wordbank.txt", fillrandletters );
