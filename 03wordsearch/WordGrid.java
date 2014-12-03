@@ -15,17 +15,21 @@ public class WordGrid{
 	data = new char[rows][cols];
 	for (int r = 0; r < rows; r ++){
 	    for (int c = 0; c < cols; c ++){
-		data[r][c] = '.';
+		data[r][c] = '_';
 	    }
 	}
 	rand = new Random();
+	words = new ArrayList<String>();
     }
+
     public WordGrid(){
 	this(15,15);
     }
+
     public int getRows(){
 	return data.length;
     }
+
     public int getCols(){
 	int cols = 0;
 	for (int i = 0; i < data.length; i++){
@@ -33,18 +37,20 @@ public class WordGrid{
 	}
 	return cols;
     }
+
     public void setRowsAndCols(int r, int c){
 	data = new char[r][c];
     }
+
     public void setSeed(long seed){
 	rand = new Random(seed);
     }
     
-    /**Set all values in the WordGrid to blanks '.'*/
+    /**Set all values in the WordGrid to blanks '_'*/
     private void clear(){
 	for (int r = 0; r < data.length; r++){
 	    for (int c = 0; c < data[r].length; c++){
-		data[r][c] = '.';
+		data[r][c] = '_';
 	    }
 	}
     }
@@ -81,7 +87,7 @@ public class WordGrid{
 	char[] chars = word.toCharArray();
 	if (this.getCols() - col < chars.length) return false;
 	for (int i = 0; i < chars.length; i++){
-	    if (data[row][col + i] != '.' && data[row][col + i] != chars[i]) return false;  
+	    if (data[row][col + i] != '_' && data[row][col + i] != chars[i]) return false;  
 	}
 	for (int w = 0; w < chars.length; w++){
 	    data[row][col + w] = chars[w];
@@ -89,12 +95,13 @@ public class WordGrid{
 	}
 	return true;
     }
+
     public boolean addWordVertical(String word,int row, int col){
 	if (row >= this.getRows() || col >= this.getCols()) return false;
 	char[] chars = word.toCharArray();
 	if (this.getRows() - row < chars.length) return false;
 	for (int i = 0; i < chars.length; i++){
-	    if (data[row + i][col] != '.' && data[row + i][col] != chars[i]) return false;  
+	    if (data[row + i][col] != '_' && data[row + i][col] != chars[i]) return false;  
 	}
 	for (int w = 0; w < chars.length; w++){
 	    data[row + w][col] = chars[w];
@@ -108,7 +115,7 @@ public class WordGrid{
 	char[] chars = word.toCharArray();
 	if (this.getRows() - row < chars.length || this.getCols() - col < chars.length) return false;
 	for (int i = 0; i < chars.length; i++){
-	    if (data[row + i][col + i] != '.' && data[row + i][col + i] != chars[i]) return false;  
+	    if (data[row + i][col + i] != '_' && data[row + i][col + i] != chars[i]) return false;  
 	}
 	for (int w = 0; w < chars.length; w++){
 	    data[row + w][col + w] = chars[w];
@@ -121,7 +128,7 @@ public class WordGrid{
 	char[] chars = word.toCharArray();
 	if (this.getRows() - row > chars.length || this.getCols() - col < chars.length) return false;
 	for (int i = 0; i < chars.length; i++){
-	    if ( row - i < 0 || data[row - i][col + i] != '.' && data[row - i][col + i] != chars[i]) return false;  
+	    if ( row - i < 0 || data[row - i][col + i] != '_' && data[row - i][col + i] != chars[i]) return false;  
 	}
 	for (int w = 0; w < chars.length; w++){
 	    data[row - w][col + w] = chars[w];
@@ -129,55 +136,64 @@ public class WordGrid{
 	
 	return true;
     }
+
     public static String reverse(String a){
 	String result = new StringBuilder(a).reverse().toString();
 	return result;
     }
-    public  void fit(String word){
+
+    public boolean fit(String word){
 	int direction = rand.nextInt(8);
 	for (int tries = 100; tries > 0; tries--){
 	    int x = rand.nextInt(getCols());
 	    int y = rand.nextInt(getRows());
 	    if (direction == 0){
-		if (addWordHorizontal(word,x,y)) break;
+		if (addWordHorizontal(word,x,y)) return true;
 		direction = rand.nextInt(8);
 	    }else if (direction == 1){
-		if (addWordHorizontal(WordGrid.reverse(word),x,y)) break;
+		if (addWordHorizontal(WordGrid.reverse(word),x,y)) return true;
 	        direction = rand.nextInt(8);
 	    }else if (direction == 2){
-		if (addWordVertical(word,x,y)) break;
+		if (addWordVertical(word,x,y)) return true;
 		direction = rand.nextInt(8);
 	    }else if (direction == 3){
-		if (addWordVertical(WordGrid.reverse(word),x,y)) break;
+		if (addWordVertical(WordGrid.reverse(word),x,y)) return true;
 	        direction = rand.nextInt(8);
 	    }else if (direction == 4){
-	        if (addWordDiagonalDown(word,x,y)) break;
+	        if (addWordDiagonalDown(word,x,y)) return true;
 	        direction = rand.nextInt(8);
 	    }else if (direction == 5){
-		if (addWordDiagonalDown(WordGrid.reverse(word),x,y)) break;
+		if (addWordDiagonalDown(WordGrid.reverse(word),x,y)) return true;
 		direction = rand.nextInt(8);
 	    }else if (direction == 6){
-	        if (addWordDiagonalUp(word,x,y)) break;
+	        if (addWordDiagonalUp(word,x,y)) return true;
 	        direction = rand.nextInt(8);
 	    }else{
-	        if (addWordDiagonalUp(WordGrid.reverse(word),x,y)) break;
+	        if (addWordDiagonalUp(WordGrid.reverse(word),x,y)) return true;
 		direction = rand.nextInt(8);
 	    }	
 	}
+	return false;
     }
+
     public void loadWordsFromFile(String filename, boolean fillRandomLetters) throws FileNotFoundException {
 	chooseWords(filename);
 	if (fillRandomLetters){
 	    fillIn();
 	}
     }
+
     public void chooseWords(String f) throws FileNotFoundException{
         ArrayList<String> allWords = scan(f);
         for (int i = allWords.size(); i > 0; i--){
-	    fit(scan(f).get(rand.nextInt(scan(f).size())));
-	    words.add(scan(f).get(rand.nextInt(scan(f).size())));
+	    String w = allWords.get(rand.nextInt(i));
+	    if(fit(w)){
+		words.add(w);
+		allWords.remove(w);
+	    }
 	}
     }
+
     public static ArrayList<String> scan(String f) throws FileNotFoundException {
 	File fname = new File(f);
 	Scanner scnr = new Scanner(fname);
@@ -187,51 +203,42 @@ public class WordGrid{
 	}
 	return allWords;
     }
+
     public void fillIn(){
 	for (int i = 0 ; i < data.length ; i++){
 	    for (int x = 0; x < data[i].length ; x++){
-		if (data[i][x]!='.'){
+		if (data[i][x]=='_'){
 		    data[i][x] = pickRandLetter();
 		}
 	    }
 	}
     }
+
     public char pickRandLetter(){
-	int num = rand.nextInt(26);
-	if (num == 0) return 'a';
-	if (num == 1) return 'b';
-	if (num == 2) return 'c';
-	if (num == 3) return 'd';
-	if (num == 4) return 'e';
-	if (num == 5) return 'f';
-	if (num == 6) return 'g';
-	if (num == 7) return 'h';
-	if (num == 8) return 'i';
-	if (num == 9) return 'j';
-	if (num == 10) return 'k';
-	if (num == 11) return 'l';
-	if (num == 12) return 'm';
-	if (num == 13) return 'n';
-	if (num == 14) return 'o';
-	if (num == 15) return 'p';
-	if (num == 16) return 'q';
-	if (num == 17) return 'r';
-	if (num == 18) return 's';
-	if (num == 19) return 't';
-	if (num == 20) return 'u';
-	if (num == 21) return 'v';
-	if (num == 22) return 'w';
-	if (num == 23) return 'x';
-	if (num == 24) return 'y';
-        return 'z';
+	char letter = (char)(rand.nextInt(26) + 97);
+	return letter;
         
     }
+
     public String wordsInPuzzle(){
-	String out = "";
-	for (int i = 0; i < words.size() -2; i+=3){
-	    out+= "     " + words.get(i) + "     " + words.get(i+1) + "     " + words.get(i+2) + "\n";
+	String result = "";
+       	for (int i = 0; i < words.size(); i++){
+	    if (i % 3 == 0){
+		result += "\n";
+	    }
+	    result += words.get(i) + addSpaces(words.get(i));
 	}
-	return out;
+	result += "\n";
+	return result;
+    }
+
+    public String addSpaces(String word){
+	int spaces = 20 - word.length();
+	String space = " ";
+	for (int i = 0; i < spaces; i++){
+	    space += " ";
+	}
+	return space;
     }
 }
 
