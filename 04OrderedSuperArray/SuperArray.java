@@ -95,75 +95,20 @@ public class SuperArray{
 	}
 	return item;
     }
-
+    public void insertionSort(){
+	int part = 0;
+	for (int i = 1; i < this.size(); i++){
+	    if (this.get(i).compareTo(this.get(part)) < 1){
+		String temp = this.get(i);
+		String idk = this.set(i, this.get(part));
+		for (int x = part; x < this.size()-1 ; x++){
+		    this.set(x, this.get(x)) = this.set(x+1, this.get(x));
+		}
+	    }
+	}
+    }
     public static void main(String[]args){
-	/*SuperArray a = new SuperArray();
-	SuperArray b = new SuperArray(5);
-	//	System.out.println(a.toString());
-	//	System.out.println(b.toString());
-	a.add(5);
-	b.add("seven");
-	a.add("hello");
-	b.add(78);
-	System.out.println(a);
-	System.out.println(b);
-	a.resize(3);
-	b.resize(10);
-	System.out.println(a);
-	System.out.println(b);
-	a.clear();
-	System.out.println(a);
-	System.out.println(b);
-	//	System.out.println(a.get(3));
-	System.out.println(b.get(0));
-	b.set(6,"buggabo");
-	System.out.println(b);*/
 
-
-	Integer x = new Integer(5);
-	SuperArray L = new SuperArray(7);
-	L.add(x);
-	L.add(new Integer(99));
-	System.out.println(L);
-	L.add("seven");
-	L.add(7, "eight");
-	//	L.add(10, "ten");
-	System.out.println(L);
-	L.add();
-	L.set(3, "MOOP");
-
-       	System.out.println(L);
-	System.out.println(L.get(5));
-	System.out.println(L.get(3));
-	SuperArray M = new SuperArray(2);
-	L.set(5, M);
-	System.out.println(L);
-
-	L.remove(5);
-	System.out.println(L);
-	L.clear();
-
-	/*	System.out.println(L.toString());
-	SuperArray c = new SuperArray(5);
-	System.out.println(c);
-	System.out.println(c.size());
-	c.add("Test");
-	System.out.println(c);
-       	System.out.println(c.size());
-       	c.add("Blah");
-	System.out.println(c);
-       	System.out.println(c.size());
-	c.resize(3);
-	System.out.println(c);
-	c.add("Blah");
-	System.out.println(c);
-	c.add("Blah");
-	c.add("Blah");
-	System.out.println(c);	
-        a.add(2, "insertion");
-	System.out.println(c);	
-	c.remove(2);
-	System.out.println(c);*/
 
     }
 }
