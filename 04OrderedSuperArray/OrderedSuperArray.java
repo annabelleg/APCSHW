@@ -6,6 +6,9 @@ public class OrderedSuperArray extends SuperArray{
     public OrderedSuperArray(int x){
 	super(10);
     }
+    public void add(int i, String s){
+	add(s);
+    }
     public void add(String s){
 	if (this.size() == 0){
 	    super.add(s);
