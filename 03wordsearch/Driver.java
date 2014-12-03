@@ -14,22 +14,31 @@ public class Driver{
 	    }else{
 		System.out.println("Please specify how large you want your grid to be! Like this:\n      java Driver rows cols");
 	    }
-	    if (args[3]!=null && args[3].equals("1")){
-		fillrandletters = false;
-	    }else{ fillrandletters = true;}
 	    WordGrid w = new WordGrid(rows, cols);
-	    //	w.setRowsAndCols(rows,cols);
-	    if (args[2]!=null){ 
-		w.setSeed(Integer.parseInt(args[2]));  
+	    if (args.length > 2){
+		if (args.length == 4) {
+		    if (args[3]!=null){
+			if (args[3].equals("1")){
+			    fillrandletters = false;
+			}else{ fillrandletters = true;}
+		//	w.setRowsAndCols(rows,cols);
+		    }
+		}
+		if (args[2]!=null){ 
+		    w.setSeed(Long.parseLong(args[2]));  
+		}
 	    }
 	    w.loadWordsFromFile("wordbank.txt", fillrandletters );
 	    System.out.println( "Find these words:\n"+ w.wordsInPuzzle() );
 	    System.out.println( w );
+	    
 	}else{
-	    WordGrid w = new WordGrid();
-	    w.loadWordsFromFile("wordbank.txt", fillrandletters );
-	    System.out.println( "Find these words:\n"+ w.wordsInPuzzle() );
-	    System.out.println( w );
+	    System.out.println("Please do this correctly");
+	    // break;
+	    /* WordGrid w = new WordGrid();
+	       w.loadWordsFromFile("wordbank.txt", fillrandletters );
+	       System.out.println( "Find these words:\n"+ w.wordsInPuzzle() );
+	       System.out.println( w );*/
 	}
     }
 }
