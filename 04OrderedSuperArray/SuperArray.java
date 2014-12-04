@@ -95,20 +95,32 @@ public class SuperArray{
 	}
 	return item;
     }
-    public void insertionSort(){
-	int part = 0;
-	for (int i = 1; i < this.size(); i++){
-	    if (this.get(i).compareTo(this.get(part)) < 1){
-		String temp = this.get(i);
-		String idk = this.set(i, this.get(part));
-		for (int x = part; x < this.size()-1 ; x++){
-		    this.set(x, this.get(x)) = this.set(x+1, this.get(x));
-		}
+    public static void insertionSort(SuperArray A){
+	for(int i = 1; i < A.size(); i++){
+	    String value = A.get(i);
+	    int j = i - 1;
+	    while(j >= 0 && A.get(j).compareTo(value) < 1){
+		A.set(j + 1, A.get(j));
+		j--;
 	    }
+	    A.set(j + 1, value);
 	}
     }
+    
     public static void main(String[]args){
-
+	SuperArray s = new SuperArray(9);
+	s.add("HI");
+	s.add("hi");
+	s.add("hello");
+	s.add("yak");
+	s.add("Hello");
+	s.add("Antelope");
+	s.add("jello");
+	s.add("zbz");
+	s.add("HELlo");
+	System.out.println(s);
+	insertionSort(s);
+	System.out.println(s);
 
     }
 }
