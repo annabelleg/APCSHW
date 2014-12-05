@@ -95,32 +95,39 @@ public class SuperArray{
 	}
 	return item;
     }
-    public static void insertionSort(SuperArray A){
-	for(int i = 1; i < A.size(); i++){
-	    String value = A.get(i);
+    public  void insertionSort(){
+	for(int i = 1; i < size(); i++){
+	    String value = get(i);
 	    int j = i - 1;
-	    while(j >= 0 && A.get(j).compareTo(value) < 1){
-		A.set(j + 1, A.get(j));
+	    while(j >= 0 && get(j).compareTo(value) < 1){
+		set(j + 1, get(j));
 		j--;
 	    }
-	    A.set(j + 1, value);
+	    set(j + 1, value);
 	}
     }
+    public void selectionSort(){
+	for (int i = 0; i < size(); i++){
+	    String temp = get(i);
+	    for (int x = 1; x <   size(); x++){
+		String smallest = get(0);
+		if (smallest.compareTo(get(x)) > 0){
+		    smallest = get(x);
+		}
+		set(i, smallest);
+		set(x, temp);
+	    }
+	}
+    }
+
     
     public static void main(String[]args){
-	SuperArray s = new SuperArray(9);
-	s.add("HI");
-	s.add("hi");
-	s.add("hello");
-	s.add("yak");
-	s.add("Hello");
-	s.add("Antelope");
-	s.add("jello");
-	s.add("zbz");
-	s.add("HELlo");
-	System.out.println(s);
-	insertionSort(s);
-	System.out.println(s);
+	SuperArray s = new SuperArray(500000);
+	for (int i = 0; i < 500000 ; i++){
+	    s.set(i, ""+i);
+	}
+	s.insertionSort(s);
+	System.out.println("Sorted!");
 
     }
 }
