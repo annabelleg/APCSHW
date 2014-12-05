@@ -126,7 +126,7 @@ public class SuperArray{
 	for (int i = 0; i < 500000 ; i++){
 	    s.set(i, ""+i);
 	}
-	s.insertionSort(s);
+	s.insertionSort();
 	System.out.println("Sorted!");
 
     }
