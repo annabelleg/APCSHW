@@ -32,6 +32,10 @@ public class CtoF extends JFrame implements ActionListener{
     public void actionPerformed(Action e){
 	String action = e.getActionCommand();
 	if (ctof.isSelected()){
-	    ConvertToF(
+	    String result = ConvertToF(action);
 	}
+	if (ftoc.isSelected()){
+	    String result = ConvertToC(action);
+	}
+    }
 }
