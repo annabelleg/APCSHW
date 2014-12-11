@@ -1,12 +1,14 @@
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.events.*;
+import java.awt.*; 
 
 public class CtoF extends JFrame implements ActionListener{
     private JRadioButton ctof, ftoc;
-    private JLabel l;
+    private JLabel l, ans;
     private JTextField t;
     private JButton b;
+    private Container pane;
+    private ButtonGroup group;
     
     public CtoF(){
 	this.setTitle("Celcius to Fahrenheit converter");
@@ -22,20 +24,50 @@ public class CtoF extends JFrame implements ActionListener{
 	l = new JLabel("Enter your temperature here:");
 	t = new JTextField(10);
 	b = new JButton("Calculate!");	
+	ans = new JLabel("Result:");
 
+	group = new ButtonGroup();
+	group.add(ctof);
+	group.add(ftoc);
+
+	ctof.addActionListener(this);
+	ftoc.addActionListener(this);
+
+	b.setActionCommand("calculate");
+	b.addActionListener(this);
+        
 	pane.add(ctof);
 	pane.add(ftoc);
 	pane.add(l);
 	pane.add(t);
 	pane.add(b);
+	pane.add(ans);
     }
-    public void actionPerformed(Action e){
+    public void actionPerformed(ActionEvent e){
 	String action = e.getActionCommand();
-	if (ctof.isSelected()){
-	    String result = ConvertToF(action);
+	String result = "";
+	if (action.equals("calculate")){
+	    if (ctof.isSelected()){
+		result = convertToF(t.getText());
+	    }
+	    if (ftoc.isSelected()){
+		result = convertToC(t.getText());
+		}
+	    ans.setText("Result: " + result);
 	}
-	if (ftoc.isSelected()){
-	    String result = ConvertToC(action);
-	}
+    }
+    public String convertToF(String t){
+	long c = Long.parseLong(t);
+	c =(c*9)/5 + 32;
+	return ""+c;
+    }
+    public String convertToC(String t){
+	long f = Long.parseLong(t);
+        f = ((f-32)*5)/9;
+	return ""+f;
+    }
+    public static void main(String[]args){
+	CtoF g = new CtoF();
+	g.setVisible(true);
     }
 }
