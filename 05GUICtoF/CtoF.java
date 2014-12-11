@@ -12,7 +12,7 @@ public class CtoF extends JFrame implements ActionListener{
     
     public CtoF(){
 	this.setTitle("Celcius to Fahrenheit converter");
-	this.setSize(600,400);
+	this.setSize(500,400);
 	this.setLocation(100,100);
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
