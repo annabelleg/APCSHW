@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 public class Sorts{
 
     public static void bubble(int[]c) {
@@ -40,5 +42,33 @@ public class Sorts{
 	    c[first] = c[i];
 	    c[i] = temp; 
 	}           
+    }
+
+    public static void radix(int[] c){
+	ArrayList<ArrayList<Integer>> bucket = new ArrayList<ArrayList<Integer>>();
+	int m = 0;
+	int biggest = c[0];
+	for (int i = 0; i < c.length ; i++){
+	    if (c[i]>biggest){
+		biggest = c[i];
+		m = c[i].length;
+	}
+	while (!c.equals(Arrays.Sort(c))){
+	    for (int i = 0; i < c.length ; i++){
+		for (int tens = 10;i < 10^(; tens*=10){
+		    if (c[i]%tens);
+		}
+	    }
+	}		 
+    }
+    
+    public static String name(){
+	return "Gary,Annabelle";
+    }
+    public static int period(){
+	return 7;
+    }
+    public static void main(String[]args){
+
     }
 }
