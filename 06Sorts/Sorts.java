@@ -41,27 +41,4 @@ public class Sorts{
 	    c[i] = temp; 
 	}           
     }
-    
-    public static boolean isSorted(int[]c){
-	for (int i = 1; i < c.length ; i++){
-	    if (c[i] < c[i-1]) return false;
-	}
-	return true;
-    }
-    public static void main(String[]args){
-	int[] a = {5,6,3,8,0,-1,7,2,24,0,9};
-	int[] b = {5,6,3,8,0,-1,7,2,24,0,9};
-	int[] c = {5,6,3,8,0,-1,7,2,24,0,9};
-
-	Sorts.bubble(a);
-	Sorts.insertion(b);
-	Sorts.selection(c);
-
-	if (isSorted(a))
-	    System.out.println("bubble is true");
-	if (isSorted(b)) 
-	    System.out.println("insertion is true");
-	if (isSorted(c)) 
-	    System.out.println("selection is true");
-    }
 }
